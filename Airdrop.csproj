@@ -116,6 +116,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\Major_Api.cs" />
+    <Compile Include="Controller\Nomis_Api.cs" />
+    <Compile Include="Controller\Okxrace_Api.cs" />
+    <Compile Include="Controller\TonStation_Api.cs" />
     <Compile Include="Controller\XKucoin_Api.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -127,6 +130,8 @@
     <Compile Include="Helper\RegexHelper.cs" />
     <Compile Include="Model\AccountModel.cs" />
     <Compile Include="Model\Major\TaskDto.cs" />
+    <Compile Include="Model\Nomis\TaskDto.cs" />
+    <Compile Include="Model\TonStation\TaskDto.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

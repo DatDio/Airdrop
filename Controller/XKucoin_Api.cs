@@ -117,7 +117,6 @@ namespace Airdrop.Controller
 			return cookie;
 		}
 
-
 		public bool increaseGold()
 		{
 			

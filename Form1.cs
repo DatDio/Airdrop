@@ -37,6 +37,8 @@ namespace Airdrop
 
 			if (game == "Major") Major();
 			else if (game == "XKucoin") XKucoin();
+			else if (game == "Nomis") Nomis();
+			else if (game == "TonStation") TonStation();
 		}
 
 		private void Major()
@@ -132,6 +134,68 @@ namespace Airdrop
 				//Get token ...
 				accountModel.Token = _apiController.GetCookie();
 				_apiController.increaseGold();
+			}
+			catch
+			{
+				//Invoke((MethodInvoker)delegate { accountModel.Row.Cells["Status"].Value = "Lỗi catch"; });
+				goto END;
+			}
+
+		END:
+			Console.WriteLine("end");
+		}
+
+		private void Nomis()
+		{
+			Nomis_Api _apiController = null;
+			AccountModel accountModel = new AccountModel { InitParam = url };
+
+			try
+			{
+				accountModel.InitData = HttpUtility.UrlDecode(RegexHelper.GetValueFromRegex("tgWebAppData=(.*?)&", accountModel.InitParam));
+				accountModel.UserId = RegexHelper.GetValueFromRegex("id%2522%253A(.*?)%", accountModel.InitParam);
+				_apiController = new Nomis_Api(accountModel);
+				
+
+				//Get token ...
+				accountModel.Token = _apiController.Auth();
+
+				_apiController.GetProfile();
+
+				_apiController.claimTask();
+				_apiController.StartFarm();
+				_apiController.ClaimFarm();
+
+			}
+			catch
+			{
+				//Invoke((MethodInvoker)delegate { accountModel.Row.Cells["Status"].Value = "Lỗi catch"; });
+				goto END;
+			}
+
+		END:
+			Console.WriteLine("end");
+		}
+		private void TonStation()
+		{
+			TonStation_Api _apiController = null;
+			AccountModel accountModel = new AccountModel { InitParam = url };
+
+			try
+			{
+				accountModel.InitData = HttpUtility.UrlDecode(RegexHelper.GetValueFromRegex("tgWebAppData=(.*?)&", accountModel.InitParam));
+				accountModel.UserId = RegexHelper.GetValueFromRegex("id%2522%253A(.*?)%", accountModel.InitParam);
+				_apiController = new TonStation_Api(accountModel);
+
+
+				//Get token ...
+				accountModel.Token = _apiController.GetToken();
+
+				_apiController.HandleFarming();
+				_apiController.HandleTask();
+
+				
+
 			}
 			catch
 			{
