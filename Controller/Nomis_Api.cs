@@ -115,7 +115,7 @@ namespace Airdrop.Controller
 			return nextFarmClaim;
 		}
 
-		public List<TaskDto> GetTask()
+		private List<TaskDto> GetTask()
 		{
 			try
 			{
@@ -132,7 +132,8 @@ namespace Airdrop.Controller
 
 			return Alltask;
 		}
-		public List<TaskDto> CheckTaskCompleted()
+
+		private List<TaskDto> CheckTaskCompleted()
 		{
 			try
 			{

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -39,6 +40,11 @@ namespace Airdrop
 			else if (game == "XKucoin") XKucoin();
 			else if (game == "Nomis") Nomis();
 			else if (game == "TonStation") TonStation();
+			else if (game == "Vooi") Vooi();
+			else if (game == "Sidekick") Sidekick();
+			else if (game == "Bird") Bird();
+			else if (game == "CryptoRank") CryptoRank();
+			else if (game == "Coub") Coub();
 		}
 
 		private void Major()
@@ -155,7 +161,7 @@ namespace Airdrop
 				accountModel.InitData = HttpUtility.UrlDecode(RegexHelper.GetValueFromRegex("tgWebAppData=(.*?)&", accountModel.InitParam));
 				accountModel.UserId = RegexHelper.GetValueFromRegex("id%2522%253A(.*?)%", accountModel.InitParam);
 				_apiController = new Nomis_Api(accountModel);
-				
+
 
 				//Get token ...
 				accountModel.Token = _apiController.Auth();
@@ -194,7 +200,175 @@ namespace Airdrop
 				_apiController.HandleFarming();
 				_apiController.HandleTask();
 
+
+
+			}
+			catch
+			{
+				//Invoke((MethodInvoker)delegate { accountModel.Row.Cells["Status"].Value = "Lỗi catch"; });
+				goto END;
+			}
+
+		END:
+			Console.WriteLine("end");
+		}
+		private void Vooi()
+		{
+			Vooi_Api _apiController = null;
+			AccountModel accountModel = new AccountModel { InitParam = url };
+
+			try
+			{
+				accountModel.InitData = HttpUtility.UrlDecode(RegexHelper.GetValueFromRegex("tgWebAppData=(.*?)&", accountModel.InitParam));
+				accountModel.UserId = RegexHelper.GetValueFromRegex("id%2522%253A(.*?)%", accountModel.InitParam);
+				_apiController = new Vooi_Api(accountModel);
+
+
+				//Get token ...
+				accountModel.Token = _apiController.GetToken("jnoZKzY");
+
+				_apiController.HandleAutoTrade();
+				//_apiController.HandleTask();
+
+
+
+			}
+			catch
+			{
+				//Invoke((MethodInvoker)delegate { accountModel.Row.Cells["Status"].Value = "Lỗi catch"; });
+				goto END;
+			}
+
+		END:
+			Console.WriteLine("end");
+		}
+
+		private async void Sidekick()
+		{
+			Sidekick_Api _apiController = null;
+			AccountModel accountModel = new AccountModel { InitParam = url };
+
+			try
+			{
+				accountModel.InitData = HttpUtility.UrlDecode(RegexHelper.GetValueFromRegex("tgWebAppData=(.*?)&", accountModel.InitParam));
+				accountModel.UserId = RegexHelper.GetValueFromRegex("id%2522%253A(.*?)%", accountModel.InitParam);
+				_apiController = new Sidekick_Api(accountModel);
+
+
+				//Get token ...
+				accountModel.Token = _apiController.Login();
+
+				if (accountModel.Token == "")
+				{
+					goto END;
+				}
+				_apiController.GetUserDate();
+
+				await _apiController.ClaimTask();
+
+				Debug.WriteLine("Done");
+
+			}
+			catch
+			{
+				//Invoke((MethodInvoker)delegate { accountModel.Row.Cells["Status"].Value = "Lỗi catch"; });
+				goto END;
+			}
+
+		END:
+			Console.WriteLine("end");
+		}
+		private async void Bird()
+		{
+			Bird_Api _apiController = null;
+			AccountModel accountModel = new AccountModel { InitParam = url };
+
+			try
+			{
+				accountModel.InitData = HttpUtility.UrlDecode(RegexHelper.GetValueFromRegex("tgWebAppData=(.*?)&", accountModel.InitParam));
+				accountModel.UserId = RegexHelper.GetValueFromRegex("id%2522%253A(.*?)%", accountModel.InitParam);
+				_apiController = new Bird_Api(accountModel);
+
+
+				//Get token ...
+				accountModel.Level = _apiController.GetInfo();
+
 				
+				_apiController.CallWormMintAPI();
+
+				_apiController.PlayEggMinigame();
+				_apiController.HandelTask();
+
+				Debug.WriteLine("Done");
+
+			}
+			catch
+			{
+				//Invoke((MethodInvoker)delegate { accountModel.Row.Cells["Status"].Value = "Lỗi catch"; });
+				goto END;
+			}
+
+		END:
+			Console.WriteLine("end");
+		}
+
+		private async void Coub()
+		{
+			Coub_Api _apiController = null;
+			AccountModel accountModel = new AccountModel { InitParam = url };
+
+			try
+			{
+				accountModel.InitData = HttpUtility.UrlDecode(RegexHelper.GetValueFromRegex("tgWebAppData=(.*?)&", accountModel.InitParam));
+				accountModel.UserId = RegexHelper.GetValueFromRegex("id%2522%253A(.*?)%", accountModel.InitParam);
+				_apiController = new Coub_Api(accountModel);
+
+
+				//Get token ...
+				accountModel.Token = _apiController.GetToken();
+				if(accountModel.Token=="") goto END;
+				//Làm nhiệm vụ
+				_apiController.HandleTask();
+
+				Debug.WriteLine("Done");
+
+			}
+			catch
+			{
+				//Invoke((MethodInvoker)delegate { accountModel.Row.Cells["Status"].Value = "Lỗi catch"; });
+				goto END;
+			}
+
+		END:
+			Console.WriteLine("end");
+		}
+		private async void CryptoRank()
+		{
+			Cryptorank_Api _apiController = null;
+			AccountModel accountModel = new AccountModel { InitParam = url };
+
+			try
+			{
+				accountModel.InitData = HttpUtility.UrlDecode(RegexHelper.GetValueFromRegex("tgWebAppData=(.*?)&", accountModel.InitParam));
+				accountModel.UserId = RegexHelper.GetValueFromRegex("id%2522%253A(.*?)%", accountModel.InitParam);
+				_apiController = new Cryptorank_Api(accountModel);
+
+
+				//Get token ...
+				accountModel.Token = "eyJxdWVyeV9pZCI6IkFBRlJLN1JXQUFBQUFGRXJ0Rlk4VFhWVSIsInVzZXIiOnsiaWQiOjE0NTQ2NDgxNDUsImZpcnN0X25hbWUiOiLEkOG6oXQiLCJsYXN0X25hbWUiOiJEaW8iLCJ1c2VybmFtZSI6IkRhdERpbyIsImxhbmd1YWdlX2NvZGUiOiJlbiIsImFsbG93c193cml0ZV90b19wbSI6dHJ1ZX0sImF1dGhfZGF0ZSI6IjE3Mjk4Mjk3MzQiLCJoYXNoIjoiM2U4YzBiMGI0YWY0NWI3NzFiNjIxODQ5ZWI5ODgwYTRmMDk4NmNjNDM1MGZhNTllNWEzNjQ5ZWJkNGNiY2EyZSJ9";
+				  _apiController.GetInfo();
+				if (accountModel.Token == "") goto END;
+
+				_apiController.HandleFarm();
+
+				//Làm nhiệm vụ
+				_apiController.HandleTask();
+
+				//Claim Point Từ referral
+				_apiController.HandleBuddies();
+
+
+				Debug.WriteLine("Done");
 
 			}
 			catch
