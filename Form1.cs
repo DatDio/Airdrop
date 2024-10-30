@@ -45,6 +45,7 @@ namespace Airdrop
 			else if (game == "Bird") Bird();
 			else if (game == "CryptoRank") CryptoRank();
 			else if (game == "Coub") Coub();
+			else if (game == "Clayton") Clayton();
 		}
 
 		private void Major()
@@ -379,6 +380,45 @@ namespace Airdrop
 
 		END:
 			Console.WriteLine("end");
+		}
+		private async void Clayton()
+		{
+			Clayton_Api _apiController = null;
+			AccountModel accountModel = new AccountModel { InitParam = url };
+
+			try
+			{
+				accountModel.InitData = HttpUtility.UrlDecode(RegexHelper.GetValueFromRegex("tgWebAppData=(.*?)&", accountModel.InitParam));
+				accountModel.UserId = RegexHelper.GetValueFromRegex("id%2522%253A(.*?)%", accountModel.InitParam);
+				_apiController = new Clayton_Api(accountModel);
+
+
+				//Get token ...
+				_apiController.ProccessAccount();
+				
+
+
+				if (accountModel.Token == "") goto END;
+
+				//_apiController.HandleFarm();
+
+				//Làm nhiệm vụ
+				//_apiController.HandleTask();
+
+				//Claim Point Từ referral
+				//_apiController.HandleBuddies();
+
+
+				Debug.WriteLine("Done");
+
+			}
+			catch
+			{
+				goto END;
+			}
+
+		END:
+			MessageBox.Show("end");
 		}
 	}
 }
