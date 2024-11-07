@@ -2,6 +2,7 @@
 using Jint;
 using Leaf.xNet;
 using Microsoft.ClearScript.V8;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -38,10 +39,27 @@ namespace Airdrop.Helper
 			}
 		}
 
+		public static void AddHeaderRestSharp(RestRequest rq, string headers)
+		{
+			var Listheader = headers.Replace("\r", "").Split('\n');
+			foreach (var header in Listheader)
+			{
+				if (header.Trim() == "")
+				{
+					continue;
+				}
 
-	
+				try
+				{
+					var hd = header.Split(":".ToCharArray(), 2);
+					rq.AddHeader(hd[0].Trim(), hd[1].Trim());
+				}
+				catch { }
+			}
+		}
 
-		
+
+
 
 		public static string GenerateRandomString(int length)
 		{
