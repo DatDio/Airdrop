@@ -47,6 +47,7 @@ namespace Airdrop
 			else if (game == "Coub") Coub();
 			else if (game == "Clayton") Clayton();
 			else if (game == "PipWorld") PipWorld();
+			else if (game == "PinEye") PinEye();
 		}
 
 		private void Major()
@@ -295,7 +296,7 @@ namespace Airdrop
 				//Get token ...
 				accountModel.Level = _apiController.GetInfo();
 
-				
+
 				_apiController.CallWormMintAPI();
 
 				_apiController.PlayEggMinigame();
@@ -328,7 +329,7 @@ namespace Airdrop
 
 				//Get token ...
 				accountModel.Token = _apiController.GetToken();
-				if(accountModel.Token=="") goto END;
+				if (accountModel.Token == "") goto END;
 				//Làm nhiệm vụ
 				_apiController.HandleTask();
 
@@ -358,7 +359,7 @@ namespace Airdrop
 
 				//Get token ...
 				accountModel.Token = "eyJxdWVyeV9pZCI6IkFBRlJLN1JXQUFBQUFGRXJ0Rlk4VFhWVSIsInVzZXIiOnsiaWQiOjE0NTQ2NDgxNDUsImZpcnN0X25hbWUiOiLEkOG6oXQiLCJsYXN0X25hbWUiOiJEaW8iLCJ1c2VybmFtZSI6IkRhdERpbyIsImxhbmd1YWdlX2NvZGUiOiJlbiIsImFsbG93c193cml0ZV90b19wbSI6dHJ1ZX0sImF1dGhfZGF0ZSI6IjE3Mjk4Mjk3MzQiLCJoYXNoIjoiM2U4YzBiMGI0YWY0NWI3NzFiNjIxODQ5ZWI5ODgwYTRmMDk4NmNjNDM1MGZhNTllNWEzNjQ5ZWJkNGNiY2EyZSJ9";
-				  _apiController.GetInfo();
+				_apiController.GetInfo();
 				if (accountModel.Token == "") goto END;
 
 				_apiController.HandleFarm();
@@ -396,7 +397,7 @@ namespace Airdrop
 
 				//Get token ...
 				_apiController.ProccessAccount();
-				
+
 
 
 				if (accountModel.Token == "") goto END;
@@ -451,6 +452,50 @@ namespace Airdrop
 				//Claim Point Từ referral
 				//_apiController.HandleBuddies();
 
+
+				Debug.WriteLine("Done");
+
+			}
+			catch
+			{
+				goto END;
+			}
+
+		END:
+			MessageBox.Show("end");
+		}
+		private async void PinEye()
+		{
+			PinEye_Api _apiController = null;
+			AccountModel accountModel = new AccountModel { InitParam = url };
+
+			try
+			{
+				accountModel.InitData = HttpUtility.UrlDecode(RegexHelper.GetValueFromRegex("tgWebAppData=(.*?)&", accountModel.InitParam));
+				accountModel.UserId = RegexHelper.GetValueFromRegex("id%2522%253A(.*?)%", accountModel.InitParam);
+				_apiController = new PinEye_Api(accountModel);
+
+
+				//Get token ...
+				accountModel.Token = _apiController.Login();
+
+				_apiController.GetProfile();
+
+				_apiController.TapEnergy(accountModel.CurrentEnergy);
+
+				_apiController.HandleTask();
+
+				//Mua vé số
+				_apiController.BuyLottery();
+
+				//Booter tăng energy tap
+				_apiController.HandleBooters();
+
+				//mua card tăng profit, mỗi lần chạy mua tăng 1 level
+				_apiController.HandlePranaGameCard();
+
+
+				if (accountModel.Token == "") goto END;
 
 				Debug.WriteLine("Done");
 

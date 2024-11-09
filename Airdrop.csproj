@@ -143,6 +143,7 @@
     <Compile Include="Controller\Major_Api.cs" />
     <Compile Include="Controller\Nomis_Api.cs" />
     <Compile Include="Controller\Okxrace_Api.cs" />
+    <Compile Include="Controller\PinEye_Api.cs" />
     <Compile Include="Controller\PipWorld_Api.cs" />
     <Compile Include="Controller\Sidekick_Api.cs" />
     <Compile Include="Controller\TonStation_Api.cs" />
@@ -164,6 +165,9 @@
     <Compile Include="Model\CryptoRank\TaskDto.cs" />
     <Compile Include="Model\Major\TaskDto.cs" />
     <Compile Include="Model\Nomis\TaskDto.cs" />
+    <Compile Include="Model\PinEye\BooterDto.cs" />
+    <Compile Include="Model\PinEye\PranaCardDto.cs" />
+    <Compile Include="Model\PinEye\TaskDto.cs" />
     <Compile Include="Model\PipWorld\OwnedInvestItem.cs" />
     <Compile Include="Model\PipWorld\TaskDto.cs" />
     <Compile Include="Model\PipWorld\UserInforDto.cs" />
