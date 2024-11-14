@@ -48,6 +48,8 @@ namespace Airdrop
 			else if (game == "Clayton") Clayton();
 			else if (game == "PipWorld") PipWorld();
 			else if (game == "PinEye") PinEye();
+			else if (game == "DuckChain") DuckChain();
+			else if (game == "KiloEx") KiloEx();
 		}
 
 		private void Major()
@@ -496,6 +498,76 @@ namespace Airdrop
 
 
 				if (accountModel.Token == "") goto END;
+
+				Debug.WriteLine("Done");
+
+			}
+			catch
+			{
+				goto END;
+			}
+
+		END:
+			MessageBox.Show("end");
+		}
+
+		private async void DuckChain()
+		{
+			DuckChain_Api _apiController = null;
+			AccountModel accountModel = new AccountModel { InitParam = url };
+
+			try
+			{
+				accountModel.InitData = HttpUtility.UrlDecode(RegexHelper.GetValueFromRegex("tgWebAppData=(.*?)&", accountModel.InitParam));
+				accountModel.UserId = RegexHelper.GetValueFromRegex("id%2522%253A(.*?)%", accountModel.InitParam);
+				_apiController = new DuckChain_Api(accountModel);
+
+
+				//Get token ...
+				_apiController.GetProfile();
+
+				_apiController.HandleTask();
+
+
+
+
+				Debug.WriteLine("Done");
+
+			}
+			catch
+			{
+				goto END;
+			}
+
+		END:
+			MessageBox.Show("end");
+		}
+
+		private async void KiloEx()
+		{
+			KiloEx_Api _apiController = null;
+			AccountModel accountModel = new AccountModel { InitParam = url };
+
+			try
+			{
+				accountModel.InitData = HttpUtility.UrlDecode(RegexHelper.GetValueFromRegex("tgWebAppData=(.*?)&", accountModel.InitParam));
+				accountModel.UserId = RegexHelper.GetValueFromRegex("id%2522%253A(.*?)%", accountModel.InitParam);
+				_apiController = new KiloEx_Api(accountModel);
+
+
+				//Get token ...
+				_apiController.GetProfile();
+
+				_apiController.ClaimOfflineCoins();
+
+				_apiController.UpdateMining();
+
+				_apiController.checkAndBindReferral();
+
+				_apiController.HandelLongShort();
+
+
+
 
 				Debug.WriteLine("Done");
 

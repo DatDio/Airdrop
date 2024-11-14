@@ -140,6 +140,7 @@
     <Compile Include="Controller\Clayton_Api.cs" />
     <Compile Include="Controller\Coub_Api.cs" />
     <Compile Include="Controller\Cryptorank_Api.cs" />
+    <Compile Include="Controller\DuckChain_Api.cs" />
     <Compile Include="Controller\Major_Api.cs" />
     <Compile Include="Controller\Nomis_Api.cs" />
     <Compile Include="Controller\Okxrace_Api.cs" />
@@ -157,12 +158,17 @@
     </Compile>
     <Compile Include="Helper\FunctionHelper.cs" />
     <Compile Include="Helper\RegexHelper.cs" />
+    <Compile Include="Controller\KiloEx_Api.cs" />
     <Compile Include="Model\AccountModel.cs" />
     <Compile Include="Model\Bird\JointedTaskDto.cs" />
     <Compile Include="Model\Bird\TaskDto.cs" />
     <Compile Include="Model\Clayton\TaskDto.cs" />
     <Compile Include="Model\Coub\TaskFinishedDto.cs" />
     <Compile Include="Model\CryptoRank\TaskDto.cs" />
+    <Compile Include="Model\DuckChain\TaskDto.cs" />
+    <Compile Include="Model\DuckChain\TaskInfor.cs" />
+    <Compile Include="Model\KiloEx\MarginLevel.cs" />
+    <Compile Include="Model\KiloEx\TaskDto.cs" />
     <Compile Include="Model\Major\TaskDto.cs" />
     <Compile Include="Model\Nomis\TaskDto.cs" />
     <Compile Include="Model\PinEye\BooterDto.cs" />
