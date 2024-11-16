@@ -50,6 +50,7 @@ namespace Airdrop
 			else if (game == "PinEye") PinEye();
 			else if (game == "DuckChain") DuckChain();
 			else if (game == "KiloEx") KiloEx();
+			else if (game == "Frog Farm") FrogFarm();
 		}
 
 		private void Major()
@@ -558,15 +559,57 @@ namespace Airdrop
 				//Get token ...
 				_apiController.GetProfile();
 
+				//Nhập referral
+				_apiController.checkAndBindReferral();
+
 				_apiController.ClaimOfflineCoins();
 
 				_apiController.UpdateMining();
 
-				_apiController.checkAndBindReferral();
+				
 
 				_apiController.HandelLongShort();
 
 
+
+
+				Debug.WriteLine("Done");
+
+			}
+			catch
+			{
+				goto END;
+			}
+
+		END:
+			MessageBox.Show("end");
+		}
+
+		private async void FrogFarm()
+		{
+			FrogFarm_Api _apiController = null;
+			AccountModel accountModel = new AccountModel { InitParam = url };
+
+			try
+			{
+				accountModel.InitData = HttpUtility.UrlDecode(RegexHelper.GetValueFromRegex("tgWebAppData=(.*?)&", accountModel.InitParam));
+				accountModel.UserId = RegexHelper.GetValueFromRegex("id%2522%253A(.*?)%", accountModel.InitParam);
+				_apiController = new FrogFarm_Api(accountModel);
+
+
+				//Get token ...
+				_apiController.Login();
+
+				_apiController.DailyRewards();
+
+				//Nhập referral
+				_apiController.HandelTask();
+
+				_apiController.StartFarming();
+
+				_apiController.ClaimReferral();
+
+				_apiController.PlayGameFrog();
 
 
 				Debug.WriteLine("Done");

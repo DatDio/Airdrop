@@ -156,6 +156,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controller\FrogFarm_Api.cs" />
     <Compile Include="Helper\FunctionHelper.cs" />
     <Compile Include="Helper\RegexHelper.cs" />
     <Compile Include="Controller\KiloEx_Api.cs" />
@@ -167,6 +168,8 @@
     <Compile Include="Model\CryptoRank\TaskDto.cs" />
     <Compile Include="Model\DuckChain\TaskDto.cs" />
     <Compile Include="Model\DuckChain\TaskInfor.cs" />
+    <Compile Include="Model\Frog Farm\TaskDto.cs" />
+    <Compile Include="Model\Frog Farm\UserInforDto.cs" />
     <Compile Include="Model\KiloEx\MarginLevel.cs" />
     <Compile Include="Model\KiloEx\TaskDto.cs" />
     <Compile Include="Model\Major\TaskDto.cs" />

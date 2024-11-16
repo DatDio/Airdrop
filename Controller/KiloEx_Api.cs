@@ -101,6 +101,22 @@ namespace Airdrop.Controller
 			{
 				FunctionHelper.AddHeader(rq, header_temp);
 				body = rq.Get($"https://opapi.kiloex.io/tg/referral/code?account=${model.UserId}").ToString();
+			}
+			catch
+			{
+
+			}
+			try
+			{
+				FunctionHelper.AddHeader(rq, header_temp + "\n" + "Content-Type: application/json");
+				var jsonPayload = new
+				{
+					account = model.UserId,
+					code = "qq3693tw"
+				};
+
+				string jsonString = JsonConvert.SerializeObject(jsonPayload);
+				body = rq.Post($"https://opapi.kiloex.io/tg/referral/bind", jsonString, "application/json").ToString();
 
 
 			}
