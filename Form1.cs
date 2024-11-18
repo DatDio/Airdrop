@@ -51,6 +51,7 @@ namespace Airdrop
 			else if (game == "DuckChain") DuckChain();
 			else if (game == "KiloEx") KiloEx();
 			else if (game == "Frog Farm") FrogFarm();
+			else if (game == "Vertus") Vertus();
 		}
 
 		private void Major()
@@ -566,7 +567,7 @@ namespace Airdrop
 
 				_apiController.UpdateMining();
 
-				
+
 
 				_apiController.HandelLongShort();
 
@@ -610,6 +611,36 @@ namespace Airdrop
 				_apiController.ClaimReferral();
 
 				_apiController.PlayGameFrog();
+
+
+				Debug.WriteLine("Done");
+
+			}
+			catch
+			{
+				goto END;
+			}
+
+		END:
+			MessageBox.Show("end");
+		}
+
+		private async void Vertus()
+		{
+			Vertus_Api _apiController = null;
+			AccountModel accountModel = new AccountModel { InitParam = url };
+
+			try
+			{
+				accountModel.InitData = HttpUtility.UrlDecode(RegexHelper.GetValueFromRegex("tgWebAppData=(.*?)&", accountModel.InitParam));
+				accountModel.UserId = RegexHelper.GetValueFromRegex("id%2522%253A(.*?)%", accountModel.InitParam);
+				_apiController = new Vertus_Api(accountModel);
+
+
+				//Get token ...
+				_apiController.GetProfile();
+
+				_apiController.HandelTask();
 
 
 				Debug.WriteLine("Done");
