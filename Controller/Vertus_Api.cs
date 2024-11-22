@@ -7,7 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Airdrop.Model.Vertus;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 namespace Airdrop.Controller
 {
 	public class Vertus_Api
@@ -15,6 +16,7 @@ namespace Airdrop.Controller
 		Leaf.xNet.HttpRequest rq;
 		AccountModel model;
 		string header_temp, body;
+		UserInforDto userInfor;
 		public Vertus_Api(AccountModel accountModel)
 		{
 			this.model = accountModel;
@@ -24,7 +26,7 @@ namespace Airdrop.Controller
 			rq.KeepAlive = true;
 			rq.Proxy = FunctionHelper.ConvertToProxyClient(model.Proxy);
 			rq.UserAgent = Form1.useragent;
-
+			userInfor = new UserInforDto();
 			//var urlDecode = HttpUtility.UrlDecode(accountModel.InitParam);
 			//var urlJson = HttpUtility.UrlDecode(urlDecode);
 
@@ -42,20 +44,23 @@ namespace Airdrop.Controller
 		}
 		public string GetProfile()
 		{
-			string nextFarmClaim = "";
 			try
 			{
 				FunctionHelper.AddHeader(rq, header_temp + "\n" + $@"Content-Type:application/json");
 
 				body = rq.Post($"https://api.thevertus.app/users/get-data").ToString();
-
-				var wallet = RegexHelper.GetValueFromRegex("\"walletAddress\": \"(.*?)\",", body);
-
-				//Lần đầu đăng nhập phải tạo wallet
-				if (String.IsNullOrEmpty(wallet))
+				userInfor = JsonConvert.DeserializeObject<UserInforDto>(body);
+				if (String.IsNullOrEmpty(userInfor.user.walletAddress))
 				{
 					CreateNewWallet();
 				}
+				//var wallet = RegexHelper.GetValueFromRegex("\"walletAddress\":\"(.*?)\",", body);
+
+				////Lần đầu đăng nhập phải tạo wallet
+				//if (String.IsNullOrEmpty(wallet))
+				//{
+					
+				//}
 
 			}
 			catch
@@ -63,17 +68,17 @@ namespace Airdrop.Controller
 				body = "";
 			}
 
-			return nextFarmClaim;
+			return body;
 		}
 
-		private TaskDto GetAllTask()
+		private Airdrop.Model.Vertus.TaskDto GetAllTask()
 		{
 			var Alltask = new TaskDto();
 			try
 			{
 				FunctionHelper.AddHeader(rq, header_temp);
 
-				body = rq.Get($"https://api.frogfarm.site/api/tasks").ToString();
+				body = rq.Post($"https://api.thevertus.app/missions/get").ToString();
 				Alltask = JsonConvert.DeserializeObject<TaskDto>(body);
 
 			}
@@ -106,12 +111,15 @@ namespace Airdrop.Controller
 		public void HandelTask()
 		{
 			var allTask = GetAllTask();
-			var completedTasks = _userInforDto.data.tasks;
-			foreach (var task in allTask.data)
-			{
-				if (completedTasks.Any(t => t.id == task.id)) continue;
-				ClaimTask(task.id);
+			foreach (var task in allTask.newData[0]) {
+				
+				ClaimTask(task.missions.Length);
 			}
+			//foreach (var task in allTask.data)
+			//{
+			//	if (completedTasks.Any(t => t.id == task.id)) continue;
+			//	ClaimTask(task.id);
+			//}
 		}
 
 		public bool ClaimDaily()
@@ -133,7 +141,73 @@ namespace Airdrop.Controller
 
 		}
 
-		public bool CreateNewWallet()
+		public bool ClaimFarming()
+		{
+			try
+			{
+				FunctionHelper.AddHeader(rq, header_temp + "\n" + $@"Content-Type:application/json");
+
+				body = rq.Post($"https://api.thevertus.app/game-service/collect").ToString();
+
+			}
+			catch
+			{
+				body = "";
+				return false;
+				//var respone = rq.Response.ToString();
+			}
+			return true;
+
+		}
+
+		private bool CompleteAdsGram(string missionId)
+		{
+			try
+			{
+				FunctionHelper.AddHeader(rq, header_temp + "\n" + $@"Content-Type:application/json");
+				var jsonPayload = new
+				{
+					missionId = missionId
+				};
+
+				string jsonString = JsonConvert.SerializeObject(jsonPayload);
+				body = rq.Post($"https://api.thevertus.app/missions/complete-adsgram", jsonString, "application/json").ToString();
+
+			}
+			catch
+			{
+				body = "";
+				return false;
+				//var respone = rq.Response.ToString();
+			}
+			return true;
+
+		}
+		private bool CheckAdsGram(string missionId)
+		{
+			try
+			{
+				FunctionHelper.AddHeader(rq, header_temp + "\n" + $@"Content-Type:application/json");
+				var jsonPayload = new
+				{
+					missionId = missionId
+				};
+
+				string jsonString = JsonConvert.SerializeObject(jsonPayload);
+				body = rq.Post($"https://api.thevertus.app/missions/check-adsgram", jsonString, "application/json").ToString();
+
+			}
+			catch
+			{
+				body = "";
+				return false;
+				//var respone = rq.Response.ToString();
+			}
+			return true;
+
+		}
+
+		private bool CreateNewWallet()
 		{
 			try
 			{
@@ -151,5 +225,93 @@ namespace Airdrop.Controller
 			return true;
 
 		}
+
+		private Airdrop.Model.Vertus.CardDto GetAllCard()
+		{
+			var AllCard = new CardDto();
+			try
+			{
+				FunctionHelper.AddHeader(rq, header_temp);
+
+				body = rq.Post($"https://api.thevertus.app/upgrade-cards").ToString();
+				AllCard = JsonConvert.DeserializeObject<CardDto>(body);
+
+			}
+			catch
+			{
+				body = "";
+			}
+
+			return AllCard;
+		}
+
+		private bool BuyCard(string cardID)
+		{
+			try
+			{
+				FunctionHelper.AddHeader(rq, header_temp + "\n" + $@"Content-Type:application/json");
+				var jsonPayload = new
+				{
+					cardId = cardID
+				};
+
+				string jsonString = JsonConvert.SerializeObject(jsonPayload);
+				body = rq.Post($"https://api.thevertus.app/upgrade-cards/upgrade", jsonString, "application/json").ToString();
+
+			}
+			catch
+			{
+				body = "";
+				return false;
+				//var respone = rq.Response.ToString();
+			}
+			return true;
+		}
+
+		public void HandleCard()
+		{
+			var allCard = GetAllCard();
+			foreach (var card in allCard.economyCards)
+			{
+				if(card.isUpgradable && !card.isLocked)
+				{
+					BuyCard(card._id);
+				}
+			}
+		}
+
+
+		//typeFarm: storage,farm,population
+		private bool UpgradeFarming(string typeFarm)
+		{
+			try
+			{
+				FunctionHelper.AddHeader(rq, header_temp + "\n" + $@"Content-Type:application/json");
+				var jsonPayload = new
+				{
+					upgrade = typeFarm
+				};
+
+				string jsonString = JsonConvert.SerializeObject(jsonPayload);
+				body = rq.Post($"https://api.thevertus.app/users/upgrade", jsonString, "application/json").ToString();
+
+			}
+			catch
+			{
+				body = "";
+				return false;
+				//var respone = rq.Response.ToString();
+			}
+			return true;
+		}
+
+		public void HandleUpgradeFarming()
+		{
+			UpgradeFarming("farm");
+			UpgradeFarming("storage");
+			UpgradeFarming("population");
+		}
+
+
 	}
 }

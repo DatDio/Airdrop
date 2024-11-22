@@ -52,6 +52,7 @@ namespace Airdrop
 			else if (game == "KiloEx") KiloEx();
 			else if (game == "Frog Farm") FrogFarm();
 			else if (game == "Vertus") Vertus();
+			else if (game == "Dropee") Dropee();
 		}
 
 		private void Major()
@@ -641,6 +642,57 @@ namespace Airdrop
 				_apiController.GetProfile();
 
 				_apiController.HandelTask();
+
+				_apiController.ClaimDaily();
+				_apiController.ClaimFarming();
+
+				_apiController.HandleCard();
+
+				_apiController.HandleUpgradeFarming();
+
+
+
+
+				Debug.WriteLine("Done");
+
+			}
+			catch
+			{
+				goto END;
+			}
+
+		END:
+			MessageBox.Show("end");
+		}
+
+		private async void Dropee()
+		{
+			Dropee_Api _apiController = null;
+			AccountModel accountModel = new AccountModel { InitParam = url };
+
+			try
+			{
+				accountModel.InitData = HttpUtility.UrlDecode(RegexHelper.GetValueFromRegex("tgWebAppData=(.*?)&", accountModel.InitParam));
+				accountModel.UserId = RegexHelper.GetValueFromRegex("id%2522%253A(.*?)%", accountModel.InitParam);
+				_apiController = new Dropee_Api(accountModel);
+
+
+				//Get token ...
+				accountModel.Token = _apiController.Login();
+
+				_apiController.HandleDailyCheckin();
+
+				//Làm các nv mạng xh
+				_apiController.HandleTask();
+
+				_apiController.HandleFortuneWheelSpins();
+
+				//upgrade card để kiếm điểm khi offline, mỗi lần chạy là nâng cấp card lên 1 level
+				_apiController.HandleUpgradeCard();
+
+				_apiController.HandelTap();
+
+
 
 
 				Debug.WriteLine("Done");

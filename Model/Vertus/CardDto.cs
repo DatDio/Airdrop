@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Airdrop.Model.Vertus
 {
-	internal class CardDto
+	public class CardDto
 	{
 		public List<EconomyCard> economyCards { get; set; }
 		public List<MilitaryCard> militaryCards { get; set; }

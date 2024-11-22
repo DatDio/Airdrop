@@ -140,6 +140,7 @@
     <Compile Include="Controller\Clayton_Api.cs" />
     <Compile Include="Controller\Coub_Api.cs" />
     <Compile Include="Controller\Cryptorank_Api.cs" />
+    <Compile Include="Controller\Dropee_Api.cs" />
     <Compile Include="Controller\DuckChain_Api.cs" />
     <Compile Include="Controller\Major_Api.cs" />
     <Compile Include="Controller\Nomis_Api.cs" />
@@ -148,6 +149,7 @@
     <Compile Include="Controller\PipWorld_Api.cs" />
     <Compile Include="Controller\Sidekick_Api.cs" />
     <Compile Include="Controller\TonStation_Api.cs" />
+    <Compile Include="Controller\Vertus_Api.cs" />
     <Compile Include="Controller\Vooi_Api.cs" />
     <Compile Include="Controller\XKucoin_Api.cs" />
     <Compile Include="Form1.cs">
@@ -166,6 +168,8 @@
     <Compile Include="Model\Clayton\TaskDto.cs" />
     <Compile Include="Model\Coub\TaskFinishedDto.cs" />
     <Compile Include="Model\CryptoRank\TaskDto.cs" />
+    <Compile Include="Model\Dropee\ConfigDto.cs" />
+    <Compile Include="Model\Dropee\UserInfor.cs" />
     <Compile Include="Model\DuckChain\TaskDto.cs" />
     <Compile Include="Model\DuckChain\TaskInfor.cs" />
     <Compile Include="Model\Frog Farm\TaskDto.cs" />
@@ -184,6 +188,9 @@
     <Compile Include="Model\SideKick\ReponeLoginDto.cs" />
     <Compile Include="Model\SideKick\TaskDto.cs" />
     <Compile Include="Model\TonStation\TaskDto.cs" />
+    <Compile Include="Model\Vertus\CardDto.cs" />
+    <Compile Include="Model\Vertus\TaskDto.cs" />
+    <Compile Include="Model\Vertus\UserInforDto.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
