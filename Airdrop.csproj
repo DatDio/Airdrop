@@ -142,6 +142,7 @@
     <Compile Include="Controller\Cryptorank_Api.cs" />
     <Compile Include="Controller\Dropee_Api.cs" />
     <Compile Include="Controller\DuckChain_Api.cs" />
+    <Compile Include="Controller\Duck_Api.cs" />
     <Compile Include="Controller\Major_Api.cs" />
     <Compile Include="Controller\Nomis_Api.cs" />
     <Compile Include="Controller\Okxrace_Api.cs" />
@@ -172,6 +173,8 @@
     <Compile Include="Model\Dropee\UserInfor.cs" />
     <Compile Include="Model\DuckChain\TaskDto.cs" />
     <Compile Include="Model\DuckChain\TaskInfor.cs" />
+    <Compile Include="Model\Ducks\TaskDto.cs" />
+    <Compile Include="Model\Ducks\UserTaskDto.cs" />
     <Compile Include="Model\Frog Farm\TaskDto.cs" />
     <Compile Include="Model\Frog Farm\UserInforDto.cs" />
     <Compile Include="Model\KiloEx\MarginLevel.cs" />

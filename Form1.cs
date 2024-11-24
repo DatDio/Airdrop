@@ -53,6 +53,7 @@ namespace Airdrop
 			else if (game == "Frog Farm") FrogFarm();
 			else if (game == "Vertus") Vertus();
 			else if (game == "Dropee") Dropee();
+			else if (game == "Ducks") Ducks();
 		}
 
 		private void Major()
@@ -696,6 +697,42 @@ namespace Airdrop
 
 
 				Debug.WriteLine("Done");
+
+			}
+			catch
+			{
+				goto END;
+			}
+
+		END:
+			MessageBox.Show("end");
+		}
+
+		private async void Ducks()
+		{
+			Duck_Api _apiController = null;
+			AccountModel accountModel = new AccountModel { InitParam = url };
+
+			try
+			{
+				accountModel.InitData = HttpUtility.UrlDecode(RegexHelper.GetValueFromRegex("tgWebAppData=(.*?)&", accountModel.InitParam));
+				accountModel.UserId = RegexHelper.GetValueFromRegex("id%2522%253A(.*?)%", accountModel.InitParam);
+				_apiController = new Duck_Api(accountModel);
+
+
+				//Get token ...
+				//login lúc được lúc ko
+				accountModel.Token = _apiController.Login();
+
+				if(accountModel.Token=="") goto END;
+				_apiController.DailyCheckin();
+
+				 _apiController.HandleTask();
+
+
+
+
+				
 
 			}
 			catch

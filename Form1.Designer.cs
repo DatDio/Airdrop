@@ -56,7 +56,8 @@
             "KiloEx",
             "Frog Farm",
             "Vertus",
-            "Dropee"});
+            "Dropee",
+            "Ducks"});
 			this.comboBox1.Location = new System.Drawing.Point(82, 25);
 			this.comboBox1.Name = "comboBox1";
 			this.comboBox1.Size = new System.Drawing.Size(121, 21);
