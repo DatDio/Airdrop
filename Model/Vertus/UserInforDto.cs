@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,10 +32,10 @@ namespace Airdrop.Model.Vertus
 		public string resource { get; set; }
 		public DateTime createdAt { get; set; }
 		public bool isActive { get; set; }
-		public int __v { get; set; }
+		public long __v { get; set; }
 		public string description { get; set; }
-		public int timeToComplete { get; set; }
-		public int rewardPercent { get; set; }
+		public long timeToComplete { get; set; }
+		public long rewardPercent { get; set; }
 		public string rewardType { get; set; }
 		public long minReward { get; set; }
 		public bool isOnlyAdmin { get; set; }
@@ -51,7 +52,7 @@ namespace Airdrop.Model.Vertus
 	public class DailyRewards
 	{
 		public int consecutiveDays { get; set; }
-		public DateTime lastRewardClaimed { get; set; }
+		public string lastRewardClaimed { get; set; }
 	}
 
 	public class Farm
@@ -103,19 +104,19 @@ namespace Airdrop.Model.Vertus
 		public string walletAddress { get; set; }
 		public string bounceableWallet { get; set; }
 		public DateTime createdAt { get; set; }
-		public long balance { get; set; }
-		public int storage { get; set; }
+		public BigInteger balance { get; set; }
+		public BigInteger storage { get; set; }
 		public bool activated { get; set; }
 		public string role { get; set; }
 		public Abilities abilities { get; set; }
 		public string groupId { get; set; }
-		public long vertStorage { get; set; }
+		public BigInteger vertStorage { get; set; }
 		public bool isIpSaved { get; set; }
 		public DailyRewards dailyRewards { get; set; }
 		public DailyCode dailyCode { get; set; }
 		public DateTime lastOnline { get; set; }
-		public long valuePerHour { get; set; }
-		public long earnedOffline { get; set; }
+		public BigInteger valuePerHour { get; set; }
+		public BigInteger earnedOffline { get; set; }
 		public bool isCompletedEvent { get; set; }
 		public string eventUuid { get; set; }
 		public List<Alert> alerts { get; set; }

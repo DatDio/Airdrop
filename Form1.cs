@@ -642,9 +642,11 @@ namespace Airdrop
 				//Get token ...
 				_apiController.GetProfile();
 
+
 				_apiController.HandelTask();
 
 				_apiController.ClaimDaily();
+
 				_apiController.ClaimFarming();
 
 				_apiController.HandleCard();

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,7 +24,7 @@ namespace Airdrop.Model.Vertus
 		public string icon { get; set; }
 		public string type { get; set; }
 		public int currentLevel { get; set; }
-		public int currentValue { get; set; }
+		public long currentValue { get; set; }
 		public bool isUpgradable { get; set; }
 		public object nextValue { get; set; }
 		public bool isLocked { get; set; }
@@ -33,7 +34,7 @@ namespace Airdrop.Model.Vertus
 	public class Level
 	{
 		public string _id { get; set; }
-		public object cost { get; set; }
+		public BigInteger cost { get; set; }
 		public object value { get; set; }
 	}
 
@@ -46,8 +47,8 @@ namespace Airdrop.Model.Vertus
 		public List<Level> levels { get; set; }
 		public string icon { get; set; }
 		public string type { get; set; }
-		public int currentLevel { get; set; }
-		public int currentValue { get; set; }
+		public long currentLevel { get; set; }
+		public long currentValue { get; set; }
 		public bool isUpgradable { get; set; }
 		public object nextValue { get; set; }
 		public bool isLocked { get; set; }
@@ -65,8 +66,8 @@ namespace Airdrop.Model.Vertus
 		public List<Level> levels { get; set; }
 		public string icon { get; set; }
 		public string type { get; set; }
-		public int currentLevel { get; set; }
-		public int currentValue { get; set; }
+		public long currentLevel { get; set; }
+		public long currentValue { get; set; }
 		public bool isUpgradable { get; set; }
 		public object nextValue { get; set; }
 		public bool isLocked { get; set; }
